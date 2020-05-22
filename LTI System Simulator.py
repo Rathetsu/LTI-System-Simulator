@@ -33,8 +33,6 @@ def parameters_window():
     new_window = Toplevel(root)
     new_window.title("Enter Parameters")
     #new_window.geometry("500x500")
-    entries = []
-    labels = []
     for i in range(n):
         var_name = "a" + str(i)
         create_label_widget(new_window, var_name)
