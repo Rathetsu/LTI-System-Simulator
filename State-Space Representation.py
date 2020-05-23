@@ -1,5 +1,5 @@
 """
-Converting an i/o equation into it's correspondent SSR using the CCF method
+Converting an i/o differential equation into it's correspondent SSR using the CCF method
 """
 import numpy as np
 
@@ -51,7 +51,7 @@ def setC(n, m, a, b):
     :param m: highest order of input derivatives
     :param a: list of output coefficients
     :param b: list of input coefficients
-    :return: a NumPy 2D array B
+    :return: a NumPy 2D array c
     """
     C = []
     if m == n:
@@ -70,7 +70,7 @@ def setD(n, m, b):
         :param n: number of state vars
         :param m: highest order of input derivatives
         :param b: list of input coefficients
-        :return: a NumPy 2D array B
+        :return: a NumPy 2D array D
         """
     if m == n:
         D = [b[-1]]
