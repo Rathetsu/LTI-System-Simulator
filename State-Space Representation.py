@@ -3,26 +3,25 @@ Converting an i/o differential equation into it's correspondent SSR using the CC
 """
 import numpy as np
 
-def setA(n, a):
+def setA(a):
     """
     Sets the matrix A with dimensions n*n
-    :param n: number of state vars
     :param a: output coefficients provided as a list
-
     :returns: a NumPy 2D array A
     """
+
     A = []
-    for row in range(0, n):
+    for row in range(0, len(a)-1):
         A.append([])
-        if not row == n-1:
-            for col in range (0, n):
+        if not row == len(a)-2:
+            for col in range(0, len(a)-1):
                 if col == row+1:
                     A[row].append(1)
                 else:
                     A[row].append(0)
         else:
-
-            A[row] = [element * -1 for element in a]
+            for col in range(0, len(a)-1):
+                A[row].append(-1 * a[len(a)-col-1])
     A = np.array(A)
     return A
 
@@ -30,7 +29,7 @@ def setA(n, a):
 def setB(n):
     """
     Sets matrix B with dimensions n*1
-    :param n: number of state vars
+    :param n: highest order of output derivatives
     :return: a NumPy 2D array B
     """
     B = []
@@ -47,19 +46,19 @@ def setB(n):
 def setC(n, m, a, b):
     """
      Sets matrix c with dimensions 1*n
-    :param n: number of state vars
+    :param n: highest order of output derivatives
     :param m: highest order of input derivatives
     :param a: list of output coefficients
     :param b: list of input coefficients
     :return: a NumPy 2D array c
     """
     C = []
-    if m == n:
-        for col in range(0, n):
-            C.append(b[col]-a[col]*b[n-col-1])
+    if len(a) == len(b):
+        for col in range(0, len(a)-1):
+            C.append(b[len(a)-col-2]-a[len(a)-col-2]*b[0])
     else:
-        for col in range(0, m):
-            C.append(b[col])
+        for col in range(0, len(b)-1):
+            C.append(b[len(b)-col-2])
     C = np.array(C)
     return C
 
@@ -67,23 +66,25 @@ def setC(n, m, a, b):
 def setD(n, m, b):
     """
          Sets matrix c with dimensions 1*n
-        :param n: number of state vars
+        :param n: highest order of output derivatives
         :param m: highest order of input derivatives
         :param b: list of input coefficients
         :return: a NumPy 2D array D
         """
     if m == n:
-        D = [b[-1]]
+        D = [b[0]]
     else:
         D = [0]
     D = np.array(D)
     return D
 
 
-#print(setA(4, [4, 3, 2, 1]))
-#print(setB(5))
-#print(setC(3, 3, [3, 2, 1], [5, 6, 7]))
-#print(setD(3, 3, [1, 2, 3]))
+a = setA([1, 2, 3])
+
+print(a)
+print(setB(5))
+print(setC(2, 2, [3, 2, 1], [5, 6, 7]))
+print(setD(3, 3, [1, 2, 3]))
 
 
 
