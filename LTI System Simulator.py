@@ -18,7 +18,7 @@ title = Label(root, image = img, bg='#1C1C1C').pack()
 
 #title.grid(row = 0, ipadx = 10)   
 def create_entry_widget(window):
-    entry_widget = Entry(window, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
+    entry_widget = Entry(window, width=10, font=("Times New Roman", 20), fg = 'black', bd = 6)
     entry_widget.pack()
     return entry_widget
 
