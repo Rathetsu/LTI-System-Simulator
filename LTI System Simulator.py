@@ -8,6 +8,7 @@ It should allow the user to:
 """
 from tkinter import *
 import SSR
+import Solver
 
 
 root = Tk()
@@ -28,16 +29,25 @@ def create_label_widget(window, var_name):
     label_widget.pack()
     return label_widget
 
+
+n_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
+m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
+
+n_input.pack(side = LEFT, pady = 15, padx = 25)
+m_input.pack(side = LEFT, pady = 15, padx = 25)
+
+
+n = 0
+m = 0
 a = []
 b = []
 
 def parameters_window():
-    n = int(n_input.get())
-    m = int(m_input.get())
     new_window = Toplevel(root)
     new_window.title("Enter Parameters")
-    #new_window.geometry("600x800")
     entries = []
+    n = int(n_input.get())
+    m = int(m_input.get())
     for i in range(n):
         var_name = "a" + str(n-i-1)
         create_label_widget(new_window, var_name)
@@ -52,17 +62,20 @@ def parameters_window():
         entries.append(create_entry_widget(new_window))
         b.append(entries[i + n].get())
 
+click = Button(root, text = "get parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
+click.pack()
 
+# State-Space Matrices
+A = SSR.setA(a)
+B = SSR.setB(n)
+C = SSR.setC(a, b)
+D = SSR.setD(n, m, b)
+
+print(setA(a))
+print(setB(n))
+print(setC(a, b))
+print(setD(n, m, b))
 
 #signature = Label(root, text = "Created by")
-
-n_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
-m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
-
-n_input.pack(side = LEFT, pady = 15, padx = 25)
-m_input.pack(side = LEFT, pady = 15, padx = 25)
-
-
-click = Button(root, text = "get parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window).pack()
 
 root.mainloop()
