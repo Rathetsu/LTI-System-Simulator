@@ -51,7 +51,7 @@ def parameters_window():
     n = int(n_input.get())
     m = int(m_input.get())
     for i in range(n + 1):
-        var_name = "a" + str(n-i-1)
+        var_name = "a" + str(n-i)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
         entries.append(create_entry_widget(new_window))
@@ -59,7 +59,7 @@ def parameters_window():
 
     b.clear()
     for i in range(m + 1):
-        var_name = "b" + str(m-i-1)
+        var_name = "b" + str(m-i)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
         entries.append(create_entry_widget(new_window))
@@ -74,6 +74,8 @@ B = SSR.setB(n)
 C = SSR.setC(a, b)
 D = SSR.setD(n, m, b)
 
+print(a)
+print(b)
 print(A)
 print(B)
 print(C)
