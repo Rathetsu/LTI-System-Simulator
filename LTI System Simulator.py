@@ -28,6 +28,9 @@ def create_label_widget(window, var_name):
     label_widget.pack()
     return label_widget
 
+a = []
+b = []
+
 def parameters_window():
     n = int(n_input.get())
     m = int(m_input.get())
@@ -35,17 +38,15 @@ def parameters_window():
     new_window.title("Enter Parameters")
     #new_window.geometry("600x800")
     entries = []
-    a = []
-    b = []
     for i in range(n):
-        var_name = "a" + str(i)
+        var_name = "a" + str(n-i-1)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
         entries.append(create_entry_widget(new_window))
         a.append(entries[i].get())
 
     for i in range(m):
-        var_name = "b" + str(i)
+        var_name = "b" + str(m-i-1)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
         entries.append(create_entry_widget(new_window))
