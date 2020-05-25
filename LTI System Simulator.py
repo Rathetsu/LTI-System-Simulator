@@ -1,5 +1,5 @@
 """
-The GUI file.
+The GUI file and the main driver of the program.
 It should allow the user to:
     1. Enter system paramaters like n, m, a's and b's.
     2. Select the input signal type (unit impulse, unit step).
@@ -7,9 +7,10 @@ It should allow the user to:
     4. Plotting the system states (X_1(t), X_2(t), X_3(t), ...., X_n(t)).
 """
 from tkinter import *
+import SSR
+
 
 root = Tk()
-
 root.title("LTI System Simulator")
 root.geometry("1000x700")
 root.configure(bg='#1C1C1C')
@@ -32,21 +33,27 @@ def parameters_window():
     m = int(m_input.get())
     new_window = Toplevel(root)
     new_window.title("Enter Parameters")
-    #new_window.geometry("500x500")
+    #new_window.geometry("600x800")
+    entries = []
+    a = []
+    b = []
     for i in range(n):
         var_name = "a" + str(i)
         create_label_widget(new_window, var_name)
-        create_entry_widget(new_window)
+        #create_entry_widget(new_window)
+        entries.append(create_entry_widget(new_window))
+        a.append(entries[i].get())
 
     for i in range(m):
         var_name = "b" + str(i)
-        labels.append(create_label_widget(new_window, var_name))
+        create_label_widget(new_window, var_name)
+        #create_entry_widget(new_window)
         entries.append(create_entry_widget(new_window))
+        b.append(entries[i + n].get())
 
 
 
 #signature = Label(root, text = "Created by")
-
 
 n_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)

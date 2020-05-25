@@ -1,10 +1,15 @@
 import numpy as np
+import SSR
 
 """
 The Algorithm used to solve here is called the SS-SSEB Algorithm which is the most effiecient way for
 finding the numerical solution for the Single-Input-Single-Output-State-Space-Equation (SISO-SSE) using the Block method.
 
 """
+
+
+
+
 
 def Fi(i, j):
     # This function denotes the ith linear functional relationship.
@@ -15,7 +20,6 @@ def Block(num, i , j):
     return Block_Result
 
 def SS_SSEB():
-    "main driver"
     # Step 1: Define k and h
     k = 0       # (k + 1) is the number of the time points.
     h = (t_k - t_0) / k     # t_k is the last time point. t_0 is the initial state.
