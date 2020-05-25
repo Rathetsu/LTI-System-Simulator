@@ -40,7 +40,9 @@ m_input.pack(side = LEFT, pady = 15, padx = 25)
 n = 0
 m = 0
 a = []
-b = []
+b = [0]
+ # The zero is a place holder that we clear later in the event of calling the parameters_window function.
+ # Its purpose is to bypass the IndexError "list index out of range".       
 
 def parameters_window():
     new_window = Toplevel(root)
@@ -48,14 +50,15 @@ def parameters_window():
     entries = []
     n = int(n_input.get())
     m = int(m_input.get())
-    for i in range(n):
+    for i in range(n + 1):
         var_name = "a" + str(n-i-1)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
         entries.append(create_entry_widget(new_window))
         a.append(entries[i].get())
 
-    for i in range(m):
+    b.clear()
+    for i in range(m + 1):
         var_name = "b" + str(m-i-1)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
@@ -71,10 +74,10 @@ B = SSR.setB(n)
 C = SSR.setC(a, b)
 D = SSR.setD(n, m, b)
 
-print(setA(a))
-print(setB(n))
-print(setC(a, b))
-print(setD(n, m, b))
+print(A)
+print(B)
+print(C)
+print(D)
 
 #signature = Label(root, text = "Created by")
 
