@@ -36,17 +36,13 @@ m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', 
 n_input.pack(side = LEFT, pady = 15, padx = 25)
 m_input.pack(side = LEFT, pady = 15, padx = 25)
 
-parameter_entry_widgets = []
-n = 0
-m = 0
-a = []
-b = [0]
- # The zero is a place holder that we clear later in the event of calling the parameters_window function.
- # Its purpose is to bypass the IndexError "list index out of range".       
-
+  
 
 # State-Space Matrices
 def confirm_parameters():
+    n = int(n_input.get())
+    m = int(m_input.get())
+    print(n, m)
     for i in range(n + 1):
         a.append(int(parameter_entry_widgets[i].get()))
     for i in range(m + 1):
@@ -57,14 +53,22 @@ def confirm_parameters():
     C = SSR.setC(a, b)
     D = SSR.setD(n, m, b)
 
-    print(a)
-    print(b)
+    #print(a)
+    #print(b)
     print(A)
     print(B)
     print(C)
     print(D)
 
+parameter_entry_widgets = []
+#n = 0
+#m = 0
+a = []
+b = [0]
+ # The zero is a place holder that we clear later in the event of calling the parameters_window function.
+ # Its purpose is to bypass the IndexError "list index out of range".     
 
+ 
 def parameters_window():
     new_window = Toplevel(root)
     new_window.title("Enter Parameters")
