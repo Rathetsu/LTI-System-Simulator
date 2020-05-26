@@ -19,26 +19,105 @@ def get_h(k=1000, t_k=10.0, t_0=0.0):
     h = (t_k - t_0)/k
     return h
 
+def func_B(B_i, x_temp, A, B, n):
+    for i in range(n):
+        B_i.append(A.dot(x_temp) + B) #Modify for the input u later
+
+
+
+def SS_SSEB(n, k =1000):
+    """
+
+    :return:
+    """
+    x_t = []
+    x_temp = []
+    B1 = []
+    B2 = []
+    B3 = []
+    B4 = []
+    B5 = []
+    B6 = []
+    x_j1 = []
+    x_j2 = []
+    for j in range(k):
+        if j == 0:
+            for i in range(n):
+                x_t.append([])
+                x_t[i].append(0.0)
+        x_t = np.array(x_t)
+        x_temp = x_t
+
+        #Getting B1
+        func_B(B1, x_temp, A, B, n)
+
+        #Getting B2
+        for i in range(n):
+            x_temp = x_t + get_h() * B1[i]
+        func_B(B2, x_temp, A, B, n)
+
+        #Getting B3
+        for i in range(n):
+            x_temp = x_t + (get_h()/2)*(B1[i]+B2[i])
+        func_B(B3, x_temp, A, B, n)
+
+        #Getting B4
+        for i in range(n):
+            x_temp = x_t + 2 * get_h() * B3[i]
+        func_B(B4, x_temp, A, B, n)
+
+        #Getting B5
+        for i in range(n):
+            x_temp = x_t + (get_h()/12) * (5 * B1[i] + 8 * B3[i] - B4[i])
+        func_B(B5, x_temp, A, B, n)
+
+        #Getting B6
+        for i in range(n):
+            x_temp = x_t + (get_h()/3) * (B1[i] + B4[i] + 4 * B5[i])
+        func_B(B6, x_temp, A, B, n)
+
+        #Setting the values fot the state variables
+        for i in range(n):
+            x_j1.append(x_t[i] + (get_h()/12) * (5 * B1[0][i] + 8 * B3[0][i] - B4[0][i]))
+            x_j2.append(x_t[i] + (get_h()/3) * (B1[0][i] + B4[0][i] + 4 * B5[0][i]))
+        x_t = x_j1
+
+
+
+
+
+    print(B1[0][2])
+    print(B2[2][0])
+    print(B2[1][0])
+    print(B4[0])
+    print(B5[0])
+    print(B6)
+    print(x_j1[2])
+    print(x_j2)
+    print(x_t)
+    print(x_temp)
+
+SS_SSEB(n, 10)
+
 
 #Step 2:
 
 #Step 3:
+"""
 def f_B(B_i, A, B, x_temp, n):
     #add a prameter to modify input u later
     for i in range(0, n):  # Setting array B_1
         B_i.append(A.dot(x_temp) + B)
     B_i=np.array(B_i)
+    """
 
 
 
 
 
-
+"""
 def block(n, u, k=1000):
-    """
-
-    :return:
-    """
+    
     B_1 = []
     B_2 = []
     B_3 = []
@@ -56,7 +135,6 @@ def block(n, u, k=1000):
                 x_t[i].append(0.0)
             x_t = np.array(x_t)
         x_temp = x_t
-        print(x_t)
         f_B(B_1, A, B, x_temp, n) # Setting array B_1
         for i in range(0, n):
             x_temp[i][0] = x_t[i][0] + get_h()*B_1[i][0]
@@ -80,4 +158,5 @@ def block(n, u, k=1000):
     print(x_t[0][0])
     print(get_h())
 
-block(n, 1, 1000)
+block(n, 1, 10)
+"""
