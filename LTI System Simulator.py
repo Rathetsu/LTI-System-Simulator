@@ -10,15 +10,6 @@ from tkinter import *
 import SSR
 #import Solver
 
-
-root = Tk()
-root.title("LTI System Simulator")
-root.geometry("1000x700")
-root.configure(bg='#1C1C1C')
-img = PhotoImage(file = 'UI assets/title.png')
-title = Label(root, image = img, bg='#1C1C1C').pack()
-
-#title.grid(row = 0, ipadx = 10)   
 def create_entry_widget(window):
     entry_widget = Entry(window, width=10, font=("Times New Roman", 20), fg = 'black', bd = 6)
     entry_widget.pack()
@@ -29,14 +20,19 @@ def create_label_widget(window, var_name):
     label_widget.pack()
     return label_widget
 
+root = Tk()
+root.title("LTI System Simulator")
+root.geometry("1000x700")
+root.configure(bg='#1C1C1C')
+img = PhotoImage(file = 'UI assets/title.png')
+title = Label(root, image = img, bg='#1C1C1C').pack()
 
 n_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 
 n_input.pack(side = LEFT, pady = 15, padx = 25)
 m_input.pack(side = LEFT, pady = 15, padx = 25)
-
-  
+ 
 
 # State-Space Matrices
 def confirm_parameters():
@@ -52,17 +48,10 @@ def confirm_parameters():
     B = SSR.setB(n)
     C = SSR.setC(a, b)
     D = SSR.setD(n, m, b)
+    new_window.destroy()
 
-    #print(a)
-    #print(b)
-    print(A)
-    print(B)
-    print(C)
-    print(D)
 
 parameter_entry_widgets = []
-#n = 0
-#m = 0
 a = []
 b = [0]
  # The zero is a place holder that we clear later in the event of calling the parameters_window function.
@@ -86,6 +75,26 @@ def parameters_window():
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
         parameter_entry_widgets.append(create_entry_widget(new_window))
+
+    # State-Space Matrices
+    def confirm_parameters():
+        print(n, m)
+        for i in range(n + 1):
+            a.append(int(parameter_entry_widgets[i].get()))
+        for i in range(m + 1):
+            b.append(int(parameter_entry_widgets[i + n].get()))
+
+        A = SSR.setA(a)
+        B = SSR.setB(n)
+        C = SSR.setC(a, b)
+        D = SSR.setD(n, m, b)
+
+        print(A)
+        print(B)
+        print(C)
+        print(D)
+
+        new_window.destroy()
 
     confirm_button = Button(new_window, text = "Confirm", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = confirm_parameters)
     confirm_button.pack()
