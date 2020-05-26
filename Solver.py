@@ -40,13 +40,14 @@ def SS_SSEB(n, k =1000):
     B6 = []
     x_j1 = []
     x_j2 = []
+    x_s = []
     for j in range(k):
         if j == 0:
             for i in range(n):
                 x_t.append([])
                 x_t[i].append(0.0)
-        x_t = np.array(x_t)
-        x_temp = x_t
+        #x_t = np.array(x_t)
+        x_temp = np.array(x_t)
 
         #Getting B1
         func_B(B1, x_temp, A, B, n)
@@ -78,26 +79,28 @@ def SS_SSEB(n, k =1000):
 
         #Setting the values fot the state variables
         for i in range(n):
-            x_j1.append(x_t[i] + (get_h()/12) * (5 * B1[0][i] + 8 * B3[0][i] - B4[0][i]))
-            x_j2.append(x_t[i] + (get_h()/3) * (B1[0][i] + B4[0][i] + 4 * B5[0][i]))
-        x_t = x_j1
+            x_j1 = np.append(x_j1, (x_t[i] + (get_h()/12) * (5 * B1[0][i] + 8 * B3[0][i] - B4[0][i])))
+
+        # x_j1 ==> x_t
+        x_t = []
+        for i in range(n):
+            x_t.append([])
+            x_t[i].append(x_j1[i])
+        x_j1 = []
 
 
 
 
 
-    print(B1[0][2])
-    print(B2[2][0])
-    print(B2[1][0])
-    print(B4[0])
-    print(B5[0])
-    print(B6)
-    print(x_j1[2])
-    print(x_j2)
+
+
+    print(B1[5])
+    print(x_j1)
+    print(x_s)
     print(x_t)
     print(x_temp)
 
-SS_SSEB(n, 10)
+SS_SSEB(n, 100)
 
 
 #Step 2:
