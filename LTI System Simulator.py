@@ -32,23 +32,6 @@ m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', 
 
 n_input.pack(side = LEFT, pady = 15, padx = 25)
 m_input.pack(side = LEFT, pady = 15, padx = 25)
- 
-
-# State-Space Matrices
-def confirm_parameters():
-    n = int(n_input.get())
-    m = int(m_input.get())
-    print(n, m)
-    for i in range(n + 1):
-        a.append(int(parameter_entry_widgets[i].get()))
-    for i in range(m + 1):
-        b.append(int(parameter_entry_widgets[i + n].get()))
-
-    A = SSR.setA(a)
-    B = SSR.setB(n)
-    C = SSR.setC(a, b)
-    D = SSR.setD(n, m, b)
-    new_window.destroy()
 
 
 parameter_entry_widgets = []
