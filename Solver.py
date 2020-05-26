@@ -1,6 +1,6 @@
 import numpy as np
 import SSR
-import LTISysSym as lti
+
 
 n = 3
 m = 3
@@ -27,6 +27,7 @@ def f_B(B_i, A, B, x_temp, n):
     #add a prameter to modify input u later
     for i in range(0, n):  # Setting array B_1
         B_i.append(A.dot(x_temp) + B)
+    B_i=np.array(B_i)
 
 
 
@@ -48,29 +49,35 @@ def block(n, u, k=1000):
     x_temp = []
 
     #Add the input later
-    for j in range(0,k):
+    for j in range(0, k):
         if j == 0:
-            x_t = [0 * element for element in range(0, n)]
+            for i in range(0, n):
+                x_t.append([])
+                x_t[i].append(0.0)
             x_t = np.array(x_t)
-            x_temp = x_t
+        x_temp = x_t
+        print(x_t)
         f_B(B_1, A, B, x_temp, n) # Setting array B_1
-
-        for i in range (0,n):
-            x_temp[i]=x_t[i] + get_h()*B_1[i]
-        f_B(B_2, A, B, n) # Setting array B_2
+        for i in range(0, n):
+            x_temp[i][0] = x_t[i][0] + get_h()*B_1[i][0]
+        f_B(B_2, A, B, x_temp, n) # Setting array B_2
 
         for i in range(0, n): # Setting array B_3
-            x_temp[i] = x_t+ (get_h()/2) * B_1[i] + (get_h()/2) * B_2[i]
+            x_temp[i][0] = x_t[i][0] + (get_h()/2) * B_1[i][0] + (get_h()/2) * B_2[i][0]
         f_B(B_3, A, B, x_temp, n) # Setting array B_3
 
         for i in range(0, n): # Setting array B_4
-            x_temp[i] = x_t[i] + 2*get_h()*B_3[i]
+            x_temp[i][0] = x_t[i][0] + 2*get_h()*B_3[i][0]
         f_B(B_4, A, B, x_temp, n) # Setting array B_
 
         for i in range(0, n): # Setting array B_5
-            x_temp[i] = x_t[i] + (get_h()/12)*(5*B_1[i]+8*B_3[i]-B_4[i])
+            x_temp[i][0] = x_t[i][0] + (get_h()/12)*(5*B_1[i][0] + 8*B_3[i][0] - B_4[i][0])
         f_B(B_5, A, B, x_temp, n)  # Setting array B_5
 
         for i in range(0, n):
-            x_temp[i] = x_t[i] +(get_h()/3)*(B_1 + B_4 + B_5)
+            x_temp[i][0] = x_t[i][0] + (get_h()/3)*(B_1[i][0] + B_4[i][0] + B_5[i][0])
         f_B(B_6, A, B, x_temp, n)  # Setting array B_6
+    print(x_t[0][0])
+    print(get_h())
+
+block(n, 1, 1000)
