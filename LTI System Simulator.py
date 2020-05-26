@@ -35,7 +35,7 @@ m_input.pack(side = LEFT, pady = 15, padx = 25)
 
 
 parameter_entry_widgets = []
-a = []
+a = [] 
 b = [0]
  # The zero is a place holder that we clear later in the event of calling the parameters_window function.
  # Its purpose is to bypass the IndexError "list index out of range".     
