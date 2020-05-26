@@ -7,25 +7,6 @@ finding the numerical solution for the Single-Input-Single-Output-State-Space-Eq
 
 """
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
 def Fi(i, j):
     # This function denotes the ith linear functional relationship.
 
@@ -33,8 +14,8 @@ def Fi(i, j):
 def __block(num, i , j):
     Block_Result = Fi(i, j)
     return Block_Result
-"""
-"""
+
+
 def SS_SSEB():
     # Step 1: Define k and h
     k = 0       # (k + 1) is the number of the time points.
@@ -49,14 +30,13 @@ def SS_SSEB():
 
     for j in range(k):      # j is the number of time points.
         for i in range(n):
-            results.append(Block(1, i, j))
-            results.append(Block(2, i, j))
-            results.append(Block(3, i, j))
-            results.append(Block(4, i, j))
-            results.append(Block(5, i, j))
-            results.append(Block(6, i, j))
 
-"""
+
+
+
+
+
+
 
 """
 def one_output_step():
@@ -64,6 +44,7 @@ def one_output_step():
         if xend - x < h :
             h = xend - x
         RungeKutta(x, y, n, h)
+
 
 def derivative(y, t, k): 
     # For a model dy/dt = -k * y(t)

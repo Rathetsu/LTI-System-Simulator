@@ -8,7 +8,7 @@ It should allow the user to:
 """
 from tkinter import *
 import SSR
-import Solver
+#import Solver
 
 
 root = Tk()
@@ -36,7 +36,7 @@ m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', 
 n_input.pack(side = LEFT, pady = 15, padx = 25)
 m_input.pack(side = LEFT, pady = 15, padx = 25)
 
-
+parameter_entry_widgets = []
 n = 0
 m = 0
 a = []
@@ -44,42 +44,53 @@ b = [0]
  # The zero is a place holder that we clear later in the event of calling the parameters_window function.
  # Its purpose is to bypass the IndexError "list index out of range".       
 
+
+# State-Space Matrices
+def confirm_parameters():
+    for i in range(n + 1):
+        a.append(int(parameter_entry_widgets[i].get()))
+    for i in range(m + 1):
+        b.append(int(parameter_entry_widgets[i + n].get()))
+
+    A = SSR.setA(a)
+    B = SSR.setB(n)
+    C = SSR.setC(a, b)
+    D = SSR.setD(n, m, b)
+
+    print(a)
+    print(b)
+    print(A)
+    print(B)
+    print(C)
+    print(D)
+
+
 def parameters_window():
     new_window = Toplevel(root)
     new_window.title("Enter Parameters")
-    entries = []
     n = int(n_input.get())
     m = int(m_input.get())
     for i in range(n + 1):
-        var_name = "a" + str(n-i)
+        var_name = "a" + str(n - i)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
-        entries.append(create_entry_widget(new_window))
-        a.append(entries[i].get())
+        parameter_entry_widgets.append(create_entry_widget(new_window))
 
     b.clear()
     for i in range(m + 1):
-        var_name = "b" + str(m-i)
+        var_name = "b" + str(m - i)
         create_label_widget(new_window, var_name)
         #create_entry_widget(new_window)
-        entries.append(create_entry_widget(new_window))
-        b.append(entries[i + n].get())
+        parameter_entry_widgets.append(create_entry_widget(new_window))
 
-click = Button(root, text = "get parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
-click.pack()
+    confirm_button = Button(new_window, text = "Confirm", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = confirm_parameters)
+    confirm_button.pack()
 
-# State-Space Matrices
-A = SSR.setA(a)
-B = SSR.setB(n)
-C = SSR.setC(a, b)
-D = SSR.setD(n, m, b)
+    new_window.mainloop()
 
-print(a)
-print(b)
-print(A)
-print(B)
-print(C)
-print(D)
+parameters_button = Button(root, text = "get parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
+parameters_button.pack()
+
 
 #signature = Label(root, text = "Created by")
 
