@@ -11,7 +11,7 @@ import SSR
 #import Solver
 
 HEIGHT = 500
-WIDTH = 700
+WIDTH = 800
 
 def create_label_widget(window, var_name, r, c):
     label_widget = Label(window, text = var_name, font = ("Times New Roman", 20), fg = 'white', bg='#1C1C1C', bd = 6)
@@ -56,6 +56,7 @@ frame1.grid_columnconfigure(3, minsize = 80)
 m_label.grid(row = 1, column = 4)
 m_input.grid(row = 1, column = 5)
 frame1.grid_rowconfigure(2, minsize = 30)
+frame1.grid_columnconfigure(6, minsize = 50)
 
 
 parameter_entry_widgets = []
@@ -134,7 +135,7 @@ def parameters_window():
     new_window.mainloop()
 
 parameters_button = Button(frame1, text = "Input & Output Parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
-parameters_button.grid(row = 3, column = 5)
+parameters_button.grid(row = 3, column = 7)
 
 #signature = Label(root, text = "Created by")
 
