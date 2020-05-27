@@ -53,7 +53,7 @@ def setC(a, b):
     C = []
     if len(a) == len(b):
         for col in range(0, len(a)-1):
-            C.append(b[len(a)-col-1]-a[len(a)-col-1]*b[0])
+            C.append(b[len(a)-col-1] - a[len(a)-col-1]*b[0])
     else:
         for col in range(0, len(b)-1):
             C.append(b[len(b)-col-1])
