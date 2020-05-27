@@ -116,8 +116,8 @@ def parameters_window():
 
 n_label = Label(frame1, text = "n = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
 m_label = Label(frame1, text = "m = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
-n_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
-m_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
+n_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 5)
+m_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 5)
 parameters_button = Button(frame1, text = "Input & Output Parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
 signal_type_label = Label(frame1, text = "Input Signal Type: ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
 choosen = StringVar()
