@@ -24,16 +24,21 @@ def create_entry_widget(window, r, c):
 
 root = Tk()
 root.title("LTI System Simulator")
-root.geometry("1000x700")
+root.geometry("700x500")
 root.configure(bg='#1C1C1C')
 img = PhotoImage(file = 'UI assets/title.png')
-title = Label(root, image = img, bg='#1C1C1C').pack()
+title = Label(root, image = img, bg='#1C1C1C')
+
+# root widgets placements
+root.grid_columnconfigure(0, minsize = 30)
+title.grid(row = 0, column = 1 )
+root.grid_rowconfigure(1, minsize = 50)
 
 n_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 m_input = Entry(root, width = 10, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 
-n_input.pack(side = LEFT, pady = 15, padx = 25)
-m_input.pack(side = LEFT, pady = 15, padx = 25)
+#n_input.pack(side = LEFT, pady = 15, padx = 25)
+#m_input.pack(side = LEFT, pady = 15, padx = 25)
 
 
 parameter_entry_widgets = []
@@ -42,7 +47,7 @@ b = [0]
  # The zero is a place holder that we clear later in the event of calling the parameters_window function.
  # Its purpose is to bypass the IndexError "list index out of range".     
 
- 
+
 def parameters_window():
     new_window = Toplevel(root)
     new_window.title("Enter System Parameters")
@@ -59,7 +64,6 @@ def parameters_window():
     # r & c are placement variables 
     r = 0
     c = 0
-    new_window.grid_rowconfigure(r, minsize=30)
     r += 1
     for i in range(n + 1):
         var_name = "a" + str(n - i)
@@ -71,7 +75,7 @@ def parameters_window():
 
     b.clear()
     r += 1
-    new_window.grid_rowconfigure(r, minsize=30)
+    new_window.grid_rowconfigure(r, minsize = 30)
     r += 1
     c = 0
     for i in range(m + 1):
@@ -105,16 +109,16 @@ def parameters_window():
     confirm_button = Button(new_window, text = "Confirm", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 5, command = confirm_parameters)
     r += 1
     c += 1
-    new_window.grid_rowconfigure(r, minsize=30)
-    new_window.grid_columnconfigure(c, minsize=30)
+    new_window.grid_rowconfigure(r, minsize = 30)
+    new_window.grid_columnconfigure(c, minsize = 30)
     r += 1
     c += 1
     confirm_button.grid(row = r, column = c)
 
     new_window.mainloop()
 
-parameters_button = Button(root, text = "get parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
-parameters_button.pack()
+parameters_button = Button(root, text = "Input & Output Parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
+#parameters_button.pack()
 
 
 #signature = Label(root, text = "Created by")
