@@ -77,13 +77,13 @@ def setD(n, m, b):
     return D
 
 
-#a = [1, 2, 3, 4]
-#b = [10, 5, 7, 6]
+a = [1, 2, 3, 4]
+b = [10, 5, 7, 6]
 #n = 3
 #m = 3
 #print(setA(a))
 #print(setB(n))
-#print(setC(a, b))
+print(setC(a, b))
 #print(setD(n, m, b))
 
 
