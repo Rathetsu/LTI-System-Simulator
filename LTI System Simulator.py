@@ -10,15 +10,17 @@ from tkinter import *
 import SSR
 #import Solver
 
-def create_entry_widget(window):
-    entry_widget = Entry(window, width=10, font=("Times New Roman", 20), fg = 'black', bd = 6)
-    entry_widget.pack()
+
+def create_label_widget(window, var_name, r, c):
+    label_widget = Label(window, text = var_name, font = ("Times New Roman", 20), fg = 'white', bg='#1C1C1C', bd = 6)
+    label_widget.grid(row = r, column = c)
+    return label_widget
+    
+def create_entry_widget(window, r, c):
+    entry_widget = Entry(window, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 5)
+    entry_widget.grid(row = r, column = c)
     return entry_widget
 
-def create_label_widget(window, var_name):
-    label_widget = Label(window, text = var_name, font = ("Times New Roman", 20), fg = 'black', bd = 6)
-    label_widget.pack()
-    return label_widget
 
 root = Tk()
 root.title("LTI System Simulator")
@@ -43,21 +45,42 @@ b = [0]
  
 def parameters_window():
     new_window = Toplevel(root)
-    new_window.title("Enter Parameters")
+    new_window.title("Enter System Parameters")
+    new_window.configure(bg='#1C1C1C')
+    """   
+    frame1 = Frame(new_window)
+    frame2 = Frame(new_window)
+    frame1.pack(side = BOTTOM, fill = x)
+    frame2.pack(side = BOTTOM, fill = x)
+    """
     n = int(n_input.get())
     m = int(m_input.get())
+
+    # r & c are placement variables 
+    r = 0
+    c = 0
+    new_window.grid_rowconfigure(r, minsize=30)
+    r += 1
     for i in range(n + 1):
         var_name = "a" + str(n - i)
-        create_label_widget(new_window, var_name)
+        create_label_widget(new_window, var_name, r, c)
         #create_entry_widget(new_window)
-        parameter_entry_widgets.append(create_entry_widget(new_window))
+        c += 1
+        parameter_entry_widgets.append(create_entry_widget(new_window, r, c))
+        c += 1
 
     b.clear()
+    r += 1
+    new_window.grid_rowconfigure(r, minsize=30)
+    r += 1
+    c = 0
     for i in range(m + 1):
         var_name = "b" + str(m - i)
-        create_label_widget(new_window, var_name)
+        create_label_widget(new_window, var_name, r, c)
+        c += 1
         #create_entry_widget(new_window)
-        parameter_entry_widgets.append(create_entry_widget(new_window))
+        parameter_entry_widgets.append(create_entry_widget(new_window, r, c))
+        c += 1
 
     # State-Space Matrices
     def confirm_parameters():
@@ -79,8 +102,14 @@ def parameters_window():
 
         new_window.destroy()
 
-    confirm_button = Button(new_window, text = "Confirm", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = confirm_parameters)
-    confirm_button.pack()
+    confirm_button = Button(new_window, text = "Confirm", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 5, command = confirm_parameters)
+    r += 1
+    c += 1
+    new_window.grid_rowconfigure(r, minsize=30)
+    new_window.grid_columnconfigure(c, minsize=30)
+    r += 1
+    c += 1
+    confirm_button.grid(row = r, column = c)
 
     new_window.mainloop()
 
