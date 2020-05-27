@@ -36,28 +36,11 @@ canvas = Canvas(root, height = HEIGHT, width = WIDTH )
 canvas.pack()
 
 frame1 = Frame(root, bg = '#1C1C1C')
+frame2 = Frame(root, bg = '#1C1C1C')
 frame1.place(relwidth = 1, relheight = 1)
+#frame2.pack(side = BOTTOM)
 bg_label = Label(frame1, image = img_bg)
 bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-#root.grid_columnconfigure(0, minsize = 20)
-#title.grid(row = 0, column = 1 )
-#root.grid_rowconfigure(1, minsize = 50)
-
-n_label = Label(frame1, text = "n = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
-m_label = Label(frame1, text = "m = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
-n_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
-m_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
-
-frame1.grid_rowconfigure(0, minsize = 240)
-frame1.grid_columnconfigure(0, minsize = 30)
-n_label.grid(row = 1, column = 1)
-n_input.grid(row = 1, column = 2)
-frame1.grid_columnconfigure(3, minsize = 80)
-m_label.grid(row = 1, column = 4)
-m_input.grid(row = 1, column = 5)
-frame1.grid_rowconfigure(2, minsize = 30)
-frame1.grid_columnconfigure(6, minsize = 50)
-
 
 parameter_entry_widgets = []
 a = []
@@ -70,12 +53,7 @@ def parameters_window():
     new_window.title("Enter System Parameters")
     new_window.configure(bg='#1C1C1C')
     new_window.resizable(False, False)
-    """   
-    frame1 = Frame(new_window)
-    frame2 = Frame(new_window)
-    frame1.pack(side = BOTTOM, fill = x)
-    frame2.pack(side = BOTTOM, fill = x)
-    """
+
     n = int(n_input.get())
     m = int(m_input.get())
 
@@ -136,8 +114,32 @@ def parameters_window():
 
     new_window.mainloop()
 
+n_label = Label(frame1, text = "n = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
+m_label = Label(frame1, text = "m = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
+n_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
+m_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 parameters_button = Button(frame1, text = "Input & Output Parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
+signal_type_label = Label(frame1, text = "Input Signal Type: ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
+choosen = StringVar()
+choosen.set("Unit Step")
+signal_type_menu = OptionMenu(frame1, choosen, "Unit Step", "Unit Impulse")
+
+frame1.grid_rowconfigure(0, minsize = 240)
+frame1.grid_columnconfigure(0, minsize = 30)
+n_label.grid(row = 1, column = 1)
+n_input.grid(row = 1, column = 2)
+frame1.grid_columnconfigure(3, minsize = 80)
+m_label.grid(row = 1, column = 4)
+m_input.grid(row = 1, column = 5)
+frame1.grid_rowconfigure(2, minsize = 30)
+frame1.grid_columnconfigure(6, minsize = 50)
 parameters_button.grid(row = 3, column = 7)
+frame1.grid_rowconfigure(4, minsize = 50)
+#frame2.grid_rowconfigure(0, minsize = 200)
+#signal_type_label.grid(row = 5, column = 1)
+#signal_type_menu.grid(row = 5, column = 2)
+signal_type_label.place(x = 30, y = 410)
+signal_type_menu.place(x = 310, y = 417)
 
 #signature = Label(root, text = "Created by")
 
