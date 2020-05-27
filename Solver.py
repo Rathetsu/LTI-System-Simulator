@@ -98,6 +98,7 @@ def SS_SSEB(n, k =1000):
 
     print(x_j1)
     print(x_j2)
+    print(B1[2])
     print(x_s)
     print(x_t)
     print(x_temp)
