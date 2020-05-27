@@ -83,7 +83,7 @@ b = [10, 5, 7, 6]
 #m = 3
 #print(setA(a))
 #print(setB(n))
-print(setC(a, b))
+#print(setC(a, b))
 #print(setD(n, m, b))
 
 
