@@ -10,8 +10,8 @@ from tkinter import *
 import SSR
 #import Solver
 
-HEIGHT = 500
-WIDTH = 800
+HEIGHT = 680
+WIDTH = 880
 
 def create_label_widget(window, var_name, r, c):
     label_widget = Label(window, text = var_name, font = ("Times New Roman", 20), fg = 'white', bg='#1C1C1C', bd = 6)
@@ -26,19 +26,19 @@ def create_entry_widget(window, r, c):
 
 root = Tk()
 root.title("LTI System Simulator")
-#img = PhotoImage(file = 'UI assets/title.png')
+root.resizable(False, False)
+img_title = PhotoImage(file = 'UI assets/title.png')
+img_bg = PhotoImage(file = 'UI assets/bg.png')
 #root.geometry("700x500")
 #root.configure(bg='#1C1C1C')
 
 canvas = Canvas(root, height = HEIGHT, width = WIDTH )
 canvas.pack()
 
-#title = Label(root, image = img, bg='#1C1C1C')
-#title.pack(side = TOP)
-
 frame1 = Frame(root, bg = '#1C1C1C')
 frame1.place(relwidth = 1, relheight = 1)
-
+bg_label = Label(frame1, image = img_bg)
+bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 #root.grid_columnconfigure(0, minsize = 20)
 #title.grid(row = 0, column = 1 )
 #root.grid_rowconfigure(1, minsize = 50)
@@ -48,7 +48,7 @@ m_label = Label(frame1, text = "m = ", font = ("Georgia", 22), fg = 'white', bg=
 n_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 m_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 6)
 
-frame1.grid_rowconfigure(0, minsize = 200)
+frame1.grid_rowconfigure(0, minsize = 240)
 frame1.grid_columnconfigure(0, minsize = 30)
 n_label.grid(row = 1, column = 1)
 n_input.grid(row = 1, column = 2)
@@ -69,6 +69,7 @@ def parameters_window():
     new_window = Toplevel(root)
     new_window.title("Enter System Parameters")
     new_window.configure(bg='#1C1C1C')
+    new_window.resizable(False, False)
     """   
     frame1 = Frame(new_window)
     frame2 = Frame(new_window)
@@ -81,6 +82,7 @@ def parameters_window():
     # r & c are placement variables 
     r = 0
     c = 0
+    new_window.grid_rowconfigure(r, minsize = 30)
     r += 1
     for i in range(n + 1):
         var_name = "a" + str(n - i)
