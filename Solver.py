@@ -41,6 +41,8 @@ def SS_SSEB(n, k =1000):
     x_j1 = []
     x_j2 = []
     x_s = []
+    for i in range(n):
+        x_s.append([])
     for j in range(k):
         if j == 0:
             for i in range(n):
@@ -48,7 +50,9 @@ def SS_SSEB(n, k =1000):
                 x_t[i].append(0.0)
         #x_t = np.array(x_t)
         x_temp = np.array(x_t)
-        x_s = np.append(x_s, np.array(x_t))
+        x_s = np.array(x_s)
+        x_s = np.append(x_s, x_t, axis=1)
+
         #Getting B1
         func_B(B1, x_temp, A, B, n)
 
@@ -89,21 +93,14 @@ def SS_SSEB(n, k =1000):
             x_t[i].append(x_j1[i])
         x_j1 = []
 
-
-
-
-
-
-
-
     print(x_j1)
     print(x_j2)
-    print(B1[3])
-    print(x_s)
+    print(B1[1])
+    print(x_s[0][6])
     print(x_t)
     print(x_temp)
 
-SS_SSEB(n, 2)
+SS_SSEB(n, 15)
 
 
 #Step 2:
