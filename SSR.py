@@ -52,10 +52,10 @@ def setC(a, b):
     """
     C = []
     if len(a) == len(b):
-        for col in range(0, len(a)-1):
+        for col in range(0, len(a)):
             C.append(b[len(a)-col-1] - a[len(a)-col-1]*b[0])
     else:
-        for col in range(0, len(b)-1):
+        for col in range(0, len(b)):
             C.append(b[len(b)-col-1])
     C = np.array(C)
     return C
@@ -77,13 +77,13 @@ def setD(n, m, b):
     return D
 
 
-a = [1, 2, 3, 4]
-b = [10, 5, 7, 6]
+a = [1, 2, 3]
+b = [4, 5, 3]
 #n = 3
 #m = 3
 #print(setA(a))
 #print(setB(n))
-#print(setC(a, b))
+print(setC(a, b))
 #print(setD(n, m, b))
 
 
