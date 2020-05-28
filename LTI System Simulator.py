@@ -114,6 +114,7 @@ def parameters_window():
 
     new_window.mainloop()
 
+# Wdigets
 n_label = Label(frame1, text = "n = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
 m_label = Label(frame1, text = "m = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
 n_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 5)
@@ -123,7 +124,11 @@ signal_type_label = Label(frame1, text = "Input Signal Type: ", font = ("Georgia
 choosen = StringVar()
 choosen.set("Unit Step")
 signal_type_menu = OptionMenu(frame1, choosen, "Unit Step", "Unit Impulse")
+plot_output = Button(frame1, text = "Plot System Response", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6)
+plot_states = Button(frame1, text = "Plot States", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6)
 
+
+# Widget placement
 frame1.grid_rowconfigure(0, minsize = 240)
 frame1.grid_columnconfigure(0, minsize = 30)
 n_label.grid(row = 1, column = 1)
@@ -140,6 +145,9 @@ frame1.grid_rowconfigure(4, minsize = 50)
 #signal_type_menu.grid(row = 5, column = 2)
 signal_type_label.place(x = 30, y = 410)
 signal_type_menu.place(x = 310, y = 417)
+plot_output.place(x = 480, y = 500)
+plot_states.place(x = 530, y = 555)
+
 
 #signature = Label(root, text = "Created by")
 
