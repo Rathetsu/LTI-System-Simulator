@@ -86,21 +86,23 @@ def parameters_window():
     # State-Space Matrices
     def confirm_parameters():
         for i in range(n + 1):
-            a.append(int(parameter_entry_widgets[i].get()))
+            a.append(float(parameter_entry_widgets[i].get()))
         for i in range(m + 1):
-            b.append(int(parameter_entry_widgets[i + n + 1].get()))
-
+            b.append(float(parameter_entry_widgets[i + n + 1].get()))
+        #an = SSR.standard_form(a, b)[0]
+        #bn = SSR.standard_form(a, b)[1]
+        SSR.standard_form(a, b)
         A = SSR.setA(a)
         B = SSR.setB(n)
         C = SSR.setC(a, b)
-        D = SSR.setD(n, m, b)
+        D = SSR.setD(n, m, a, b)
 
         print(a)
         print(b)
-        #print(A)
-        #print(B)
+        print(A)
+        print(B)
         print(C)
-        #print(D)
+        print(D)
 
         new_window.destroy()
 

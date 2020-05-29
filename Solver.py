@@ -41,6 +41,7 @@ def SS_SSEB(n, k =1000):
     x_j1 = []
     x_j2 = []
     x_s = []
+    y_t = []
     for i in range(n):
         x_s.append([])
     for j in range(k):
@@ -92,9 +93,10 @@ def SS_SSEB(n, k =1000):
             x_t.append([])
             x_t[i].append(x_j1[i])
         x_j1 = []
+    y_t = x_s[0]
 
     print(x_j1)
-    print(x_j2)
+    print(y_t[14])
     print(B1[1])
     print(x_s[0][6])
     print(x_t)

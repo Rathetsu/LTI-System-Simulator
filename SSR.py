@@ -3,13 +3,29 @@ Converting an i/o differential equation into it's correspondent SSR using the CC
 """
 import numpy as np
 
+def standard_form(a=[], b=[]):
+    """
+    :param a: O/P coeffs
+    :param b: I/P coeffs
+    :return: The coeffs on the standard form with the coeff of the highest order of the o/p = 1
+    """
+    a_0 = a[0]
+    for i in range(len(a)):
+        a[i] /= a_0
+    for i in range(len(b)):
+        b[i] /= a_0
+    #an = [(element / a_0) for element in a]
+    #bn = [(element / a_0) for element in b]
+    #return [an, bn]
+
+
 def setA(a):
     """
     Sets the matrix A with dimensions n*n
     :param a: output coefficients provided as a list
     :returns: a NumPy 2D array A
     """
-
+    standard_form(a)
     A = []
     for row in range(0, len(a)-1):
         A.append([])
@@ -50,6 +66,7 @@ def setC(a, b):
     :param b: list of input coefficients
     :return: a NumPy 2D array c
     """
+    standard_form(a, b)
     C = []
     if len(a) == len(b):
         for col in range(0, len(a)):
@@ -61,7 +78,7 @@ def setC(a, b):
     return C
 
 
-def setD(n, m, b):
+def setD(n, m, a, b):
     """
          Sets matrix c with dimensions 1*n
         :param n: highest order of output derivatives
@@ -69,21 +86,22 @@ def setD(n, m, b):
         :param b: list of input coefficients
         :return: a NumPy 2D array D
         """
+    standard_form(a, b)
     if m == n:
-        D = [b[0]]
+        D = [float(b[0])]
     else:
         D = [0]
     D = np.array(D)
     return D
 
 
-a = [1, 2, 3]
-b = [4, 5, 3]
+#a = [1, 2, 3]
+#b = [5]
 #n = 3
 #m = 3
 #print(setA(a))
 #print(setB(n))
-print(setC(a, b))
+#print(setC(a, b))
 #print(setD(n, m, b))
 
 
