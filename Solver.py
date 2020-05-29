@@ -99,13 +99,14 @@ def SS_SSEB(n, k =1000):
     #Add the term ( D.dot(u) ) after adding the input
     y_t = C.dot(x_s)
 
-    print(x_j1)
+    #print(x_j1)
     print(y_t)
     print(x_s)
-    print(x_t)
-    print(x_temp)
+    #print(x_t)
+    #print(x_temp)
+    print(B1[10])
 
-SS_SSEB(n, 1)
+SS_SSEB(n, 1000)
 
 
 #Step 2:
