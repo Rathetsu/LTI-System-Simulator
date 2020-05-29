@@ -2,12 +2,12 @@ import numpy as np
 import SSR
 
 
-n = 3
+n = 4
 m = 3
-A = np.array([[0, 1, 0], [0, 0, 1], [-6, -11, -6]])
-B = np.array([[2], [-6], [16]])
-C = np.array([1, 0, 0])
-D = np.array([1])
+A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1],[-0.125, -0.125, -0.375, -0.125]])
+B = np.array([[0], [0], [0], [1]])
+C = np.array([0.125, 1.25, 0.5, 0.875])
+D = np.array([0])
 #Step 1:
 def get_h(k=1000, t_k=10.0, t_0=0.0):
     """
@@ -50,9 +50,11 @@ def SS_SSEB(n, k =1000):
                 x_t.append([])
                 x_t[i].append(0.0)
         #x_t = np.array(x_t)
-        x_temp = np.array(x_t)
-        x_s = np.array(x_s)
+        x_temp = np.array(x_t) #Temp x_t to change whenever needed to get the values of B(1 to 6)
+        x_s = np.array(x_s) #All the values of the state variables over the specified time
         x_s = np.append(x_s, x_t, axis=1)
+
+
 
         #Getting B1
         func_B(B1, x_temp, A, B, n)
@@ -85,7 +87,7 @@ def SS_SSEB(n, k =1000):
         #Setting the values fot the state variables
         for i in range(n):
             x_j1 = np.append(x_j1, (x_t[i] + (get_h()/12) * (5 * B1[0][i] + 8 * B3[0][i] - B4[0][i])))
-            x_j2 = np.append(x_j2, (x_t[i] + (get_h()/3) * (B1[0][i] + 4 * B5[0][i] + B6[0][i])))
+            #x_j2 = np.append(x_j2, (x_t[i] + (get_h()/3) * (B1[0][i] + 4 * B5[0][i] + B6[0][i])))
 
         # x_j1 ==> x_t
         x_t = []
@@ -93,16 +95,17 @@ def SS_SSEB(n, k =1000):
             x_t.append([])
             x_t[i].append(x_j1[i])
         x_j1 = []
-    y_t = x_s[0]
+
+    #Add the term ( D.dot(u) ) after adding the input
+    y_t = C.dot(x_s)
 
     print(x_j1)
-    print(y_t[14])
-    print(B1[1])
-    print(x_s[0][6])
+    print(y_t)
+    print(x_s)
     print(x_t)
     print(x_temp)
 
-SS_SSEB(n, 15)
+SS_SSEB(n, 1)
 
 
 #Step 2:
