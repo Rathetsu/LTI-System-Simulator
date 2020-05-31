@@ -108,7 +108,7 @@ def SS_SSEB(n, k =1000):
         x_j1 = []
 
     #Add the term ( D.dot(u) ) after adding the input
-    y_t = np.array(((C.dot(x_s) + D.dot*())
+    y_t = np.array((C.dot(x_s)))
 
 
     plt.plot(t, signal.unit_impulse(len(t), 100))
