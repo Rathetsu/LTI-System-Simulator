@@ -20,13 +20,16 @@ def generate_input(type, t: float, K: float):
     if type == 2:   # Unit Impulse
         u[shift] = 1
     
+    u = np.array(u).reshape(1, K)
     return u
 
 
-#print(generate_input(1, 0.01 , 10))
+"""a = generate_input(1, 0.01 , 10)
+print(a)
+
 t = []
 t = np.arange(0, 1000)
 
 plt.plot(t, generate_input(2, 0.01, 10))
 plt.grid(True)
-plt.show()
+plt.show()"""
