@@ -65,7 +65,6 @@ def parameters_window():
     for i in range(n + 1):
         var_name = "a" + str(n - i)
         create_label_widget(new_window, var_name, r, c)
-        #create_entry_widget(new_window)
         c += 1
         parameter_entry_widgets.append(create_entry_widget(new_window, r, c))
         c += 1
@@ -74,14 +73,14 @@ def parameters_window():
     r += 1
     new_window.grid_rowconfigure(r, minsize = 30)
     r += 1
-    c = 0
+    c2 = 0      # c2 is a new placement variable so we can use c for placing the confirm button
     for i in range(m + 1):
         var_name = "b" + str(m - i)
-        create_label_widget(new_window, var_name, r, c)
-        c += 1
+        create_label_widget(new_window, var_name, r, c2)
+        c2 += 1
         #create_entry_widget(new_window)
-        parameter_entry_widgets.append(create_entry_widget(new_window, r, c))
-        c += 1
+        parameter_entry_widgets.append(create_entry_widget(new_window, r, c2))
+        c2 += 1
 
     # State-Space Matrices
     def confirm_parameters():
