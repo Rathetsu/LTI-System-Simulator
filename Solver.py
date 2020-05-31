@@ -9,21 +9,19 @@ A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1],[-0.125, -0.125, -0.375, 
 B = np.array([[0], [0], [0], [1]])
 C = np.array([0.125, 1.25, 0.5, 0.875])
 D = np.array([0])
+h = 0.01
 
-#Step 1:
-def get_h(k, t_k = 10.0, t_0 = 0.0):
-    """
-    :param t_k: Final time (set to 10 by default)
-    :param t_0: Initial time (set to 0 by default)
-    :param k: Total number of time steps excluding the last step. Total no. of time steps is (k+1)
-    :return: The factor h
-    """
-    h = (t_k - t_0)/k
-    return h
+def get_h(h, H):
+    if H == 0:
+        return 0
+    elif H == 1:
+        return h
+    elif H == 2:
+        return 2 * h
 
-def func_B(B_i, x_temp, A, B, u, n):
+def func_B(B_i, x_temp, A, B, n, H):
     for i in range(n):
-        B_i.append(A.dot(x_temp) + B.dot(plot.generate_input(1, get_h, k))) # needs testing
+        B_i.append(A.dot(x_temp) + B.dot(plot.generate_input(1, get_h(h, H), k))) # needs testing
 
 
 def SS_SSEB(n, k =1000):
@@ -55,37 +53,37 @@ def SS_SSEB(n, k =1000):
         x_s = np.append(x_s, x_t, axis=1)
 
         #Getting B1
-        func_B(B1, x_temp, A, B, n)
+        func_B(B1, x_temp, A, B, n, 0)
 
         #Getting B2
         for i in range(n):
-            x_temp = x_t + get_h() * B1[i]
-        func_B(B2, x_temp, A, B, n)
+            x_temp = x_t + h * B1[i]
+        func_B(B2, x_temp, A, B, n, 1)
 
         #Getting B3
         for i in range(n):
-            x_temp = x_t + (get_h()/2)*(B1[i]+B2[i])
-        func_B(B3, x_temp, A, B, n)
+            x_temp = x_t + (h/2)*(B1[i]+B2[i])
+        func_B(B3, x_temp, A, B, n, 1)
 
         #Getting B4
         for i in range(n):
-            x_temp = x_t + 2 * get_h() * B3[i]
-        func_B(B4, x_temp, A, B, n)
+            x_temp = x_t + 2 * h * B3[i]
+        func_B(B4, x_temp, A, B, n, 2)
 
         #Getting B5
         for i in range(n):
-            x_temp = x_t + (get_h()/12) * (5 * B1[i] + 8 * B3[i] - B4[i])
-        func_B(B5, x_temp, A, B, n)
+            x_temp = x_t + (h/12) * (5 * B1[i] + 8 * B3[i] - B4[i])
+        func_B(B5, x_temp, A, B, n, 1)
 
         #Getting B6
         for i in range(n):
-            x_temp = x_t + (get_h()/3) * (B1[i] + B4[i] + 4 * B5[i])
-        func_B(B6, x_temp, A, B, n)
+            x_temp = x_t + (h/3) * (B1[i] + B4[i] + 4 * B5[i])
+        func_B(B6, x_temp, A, B, n, 2)
 
         #Setting the values fot the state variables
         for i in range(n):
-            x_j1 = np.append(x_j1, (x_t[i] + (get_h()/12) * (5 * B1[0][i] + 8 * B3[0][i] - B4[0][i])))
-            #x_j2 = np.append(x_j2, (x_t[i] + (get_h()/3) * (B1[0][i] + 4 * B5[0][i] + B6[0][i])))
+            x_j1 = np.append(x_j1, (x_t[i] + (h/12) * (5 * B1[0][i] + 8 * B3[0][i] - B4[0][i])))
+            #x_j2 = np.append(x_j2, (x_t[i] + (h/3) * (B1[0][i] + 4 * B5[0][i] + B6[0][i])))
 
         # x_j1 ==> x_t
         x_t = []
@@ -144,26 +142,26 @@ def block(n, u, k=1000):
         x_temp = x_t
         f_B(B_1, A, B, x_temp, n) # Setting array B_1
         for i in range(0, n):
-            x_temp[i][0] = x_t[i][0] + get_h()*B_1[i][0]
+            x_temp[i][0] = x_t[i][0] + h*B_1[i][0]
         f_B(B_2, A, B, x_temp, n) # Setting array B_2
 
         for i in range(0, n): # Setting array B_3
-            x_temp[i][0] = x_t[i][0] + (get_h()/2) * B_1[i][0] + (get_h()/2) * B_2[i][0]
+            x_temp[i][0] = x_t[i][0] + (h/2) * B_1[i][0] + (h/2) * B_2[i][0]
         f_B(B_3, A, B, x_temp, n) # Setting array B_3
 
         for i in range(0, n): # Setting array B_4
-            x_temp[i][0] = x_t[i][0] + 2*get_h()*B_3[i][0]
+            x_temp[i][0] = x_t[i][0] + 2*h*B_3[i][0]
         f_B(B_4, A, B, x_temp, n) # Setting array B_
 
         for i in range(0, n): # Setting array B_5
-            x_temp[i][0] = x_t[i][0] + (get_h()/12)*(5*B_1[i][0] + 8*B_3[i][0] - B_4[i][0])
+            x_temp[i][0] = x_t[i][0] + (h/12)*(5*B_1[i][0] + 8*B_3[i][0] - B_4[i][0])
         f_B(B_5, A, B, x_temp, n)  # Setting array B_5
 
         for i in range(0, n):
-            x_temp[i][0] = x_t[i][0] + (get_h()/3)*(B_1[i][0] + B_4[i][0] + B_5[i][0])
+            x_temp[i][0] = x_t[i][0] + (h/3)*(B_1[i][0] + B_4[i][0] + B_5[i][0])
         f_B(B_6, A, B, x_temp, n)  # Setting array B_6
     print(x_t[0][0])
-    print(get_h())
+    print(h)
 
 block(n, 1, 10)
 """

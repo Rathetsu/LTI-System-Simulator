@@ -25,9 +25,8 @@ def generate_input(type, t: float, K: float):
 
 #print(generate_input(1, 0.01 , 10))
 t = []
-for i in range(1000):
-    t = np.append(t, i * 0.01)
+t = np.arange(0, 1000)
 
-plt.plot(t, generate_input(1, 0.01, 10))
+plt.plot(t, generate_input(2, 0.01, 10))
 plt.grid(True)
 plt.show()
