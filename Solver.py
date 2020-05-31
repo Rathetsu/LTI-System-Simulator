@@ -1,15 +1,17 @@
 import numpy as np
 import SSR
+import plot
 
-
+k = 1000
 n = 4
 m = 3
 A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1],[-0.125, -0.125, -0.375, -0.125]])
 B = np.array([[0], [0], [0], [1]])
 C = np.array([0.125, 1.25, 0.5, 0.875])
 D = np.array([0])
+
 #Step 1:
-def get_h(k=1000, t_k=10.0, t_0=0.0):
+def get_h(k, t_k = 10.0, t_0 = 0.0):
     """
     :param t_k: Final time (set to 10 by default)
     :param t_0: Initial time (set to 0 by default)
@@ -19,9 +21,9 @@ def get_h(k=1000, t_k=10.0, t_0=0.0):
     h = (t_k - t_0)/k
     return h
 
-def func_B(B_i, x_temp, A, B, n):
+def func_B(B_i, x_temp, A, B, u, n):
     for i in range(n):
-        B_i.append(A.dot(x_temp) + B) #Modify for the input u later
+        B_i.append(A.dot(x_temp) + B.dot(plot.generate_input(1, get_h, k))) # needs testing
 
 
 
@@ -53,8 +55,6 @@ def SS_SSEB(n, k =1000):
         x_temp = np.array(x_t) #Temp x_t to change whenever needed to get the values of B(1 to 6)
         x_s = np.array(x_s) #All the values of the state variables over the specified time
         x_s = np.append(x_s, x_t, axis=1)
-
-
 
         #Getting B1
         func_B(B1, x_temp, A, B, n)
