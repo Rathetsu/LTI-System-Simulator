@@ -1,8 +1,8 @@
 import numpy as np
 import SSR
 import plot
+import matplotlib.pyplot as plt
 
-k = 1000
 n = 4
 m = 3
 A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1],[-0.125, -0.125, -0.375, -0.125]])
@@ -19,9 +19,9 @@ def get_h(h, H):
     elif H == 2:
         return 2 * h
 
-def func_B(B_i, x_temp, A, B, n, H):
+def func_B(B_i, x_temp, k, A, B, n, H):
     for i in range(n):
-        B_i.append(A.dot(x_temp) + B.dot(plot.generate_input(1, get_h(h, H), k))) # needs testing
+        B_i.append(A.dot(x_temp) + B.dot(plot.generate_input(2, get_h(h, H), k))) # needs testing
 
 
 def SS_SSEB(n, k =1000):
@@ -40,9 +40,11 @@ def SS_SSEB(n, k =1000):
     x_j2 = []
     x_s = []
     y_t = []
+    t = []
+
     for i in range(n):
         x_s.append([])
-    for j in range(k):
+    for j in range(k + 1):
         if j == 0:
             for i in range(n):
                 x_t.append([])
@@ -51,34 +53,35 @@ def SS_SSEB(n, k =1000):
         x_temp = np.array(x_t) #Temp x_t to change whenever needed to get the values of B(1 to 6)
         x_s = np.array(x_s) #All the values of the state variables over the specified time
         x_s = np.append(x_s, x_t, axis=1)
+        t = np.append(t, j * h)
 
         #Getting B1
-        func_B(B1, x_temp, A, B, n, 0)
+        func_B(B1, x_temp, k, A, B, n, 0)
 
         #Getting B2
         for i in range(n):
             x_temp = x_t + h * B1[i]
-        func_B(B2, x_temp, A, B, n, 1)
+        func_B(B2, x_temp, k, A, B, n, 1)
 
         #Getting B3
         for i in range(n):
             x_temp = x_t + (h/2)*(B1[i]+B2[i])
-        func_B(B3, x_temp, A, B, n, 1)
+        func_B(B3, x_temp, k, A, B, n, 1)
 
         #Getting B4
         for i in range(n):
             x_temp = x_t + 2 * h * B3[i]
-        func_B(B4, x_temp, A, B, n, 2)
+        func_B(B4, x_temp, k, A, B, n, 2)
 
         #Getting B5
         for i in range(n):
             x_temp = x_t + (h/12) * (5 * B1[i] + 8 * B3[i] - B4[i])
-        func_B(B5, x_temp, A, B, n, 1)
+        func_B(B5, x_temp, k, A, B, n, 1)
 
         #Getting B6
         for i in range(n):
             x_temp = x_t + (h/3) * (B1[i] + B4[i] + 4 * B5[i])
-        func_B(B6, x_temp, A, B, n, 2)
+        func_B(B6, x_temp, k, A, B, n, 2)
 
         #Setting the values fot the state variables
         for i in range(n):
@@ -100,9 +103,15 @@ def SS_SSEB(n, k =1000):
     print(x_s)
     #print(x_t)
     #print(x_temp)
-    print(B1[10])
+    #print(B1[10])
 
-SS_SSEB(n, 1000)
+    plt.plot(t, x_s[0])
+    plt.grid(True)
+    plt.show()
+
+SS_SSEB(n, 10)
+
+
 
 
 #Step 2:
