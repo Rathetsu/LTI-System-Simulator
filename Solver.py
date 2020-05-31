@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy import signal
 import SSR
 
 
@@ -24,27 +26,36 @@ def func_B(B_i, x_temp, A, B, n):
         B_i.append(A.dot(x_temp) + B) #Modify for the input u later
 
 
+def input_signal(t, ip_type = 1):
+    if ip_type == 1:
+        return 1 * (t >= 0)
+
+
+
+
 
 def SS_SSEB(n, k =1000):
     """
 
     :return:
     """
-    x_t = []
-    x_temp = []
+    x_t = []# x(t), which represents the state variables at a time. Gets overwritten and modified every iteration
+    x_temp = [] #Temp copy of x which is changed multiple times as needed to get the block equations B(1to 6)
+    #The lists for the block equations:
     B1 = []
     B2 = []
     B3 = []
     B4 = []
     B5 = []
     B6 = []
-    x_j1 = []
+    x_j1 = []#The next value for the state variables which replaces the current value of x_t
     x_j2 = []
-    x_s = []
-    y_t = []
+    x_s = [] # a list in which all the values of x at all times are stored. used in plotting the state vars and getting the o/p
+    y_t = [] # a list that represents all values of the o/p at all times
+    t = [] # a list that represents all time samples spaced evenly on k samples. t(j) = j * h. j = 1, 2 ... k and h is the step
     for i in range(n):
         x_s.append([])
-    for j in range(k):
+    for j in range(k+1):
         if j == 0:
             for i in range(n):
                 x_t.append([])
@@ -52,9 +63,9 @@ def SS_SSEB(n, k =1000):
         #x_t = np.array(x_t)
         x_temp = np.array(x_t) #Temp x_t to change whenever needed to get the values of B(1 to 6)
         x_s = np.array(x_s) #All the values of the state variables over the specified time
-        x_s = np.append(x_s, x_t, axis=1)
+        x_s = np.append(x_s, x_t, axis=1)#appending x_t as a
 
-
+        t = np.append(t, j * get_h())
 
         #Getting B1
         func_B(B1, x_temp, A, B, n)
@@ -97,14 +108,20 @@ def SS_SSEB(n, k =1000):
         x_j1 = []
 
     #Add the term ( D.dot(u) ) after adding the input
-    y_t = C.dot(x_s)
+    y_t = np.array(((C.dot(x_s) + D.dot*())
 
-    #print(x_j1)
+
+    plt.plot(t, signal.unit_impulse(len(t), 100))
+    plt.grid(True)
+    plt.show()
+
+
+    print(t)
     print(y_t)
-    print(x_s)
-    #print(x_t)
-    #print(x_temp)
-    print(B1[10])
+    print(x_s[0])
+    print(x_t[0])
+    print(x_temp)
+    print(B1[1])
 
 SS_SSEB(n, 1000)
 
