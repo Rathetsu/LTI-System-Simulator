@@ -26,10 +26,8 @@ def func_B(B_i, x_temp, A, B, u, n):
         B_i.append(A.dot(x_temp) + B.dot(plot.generate_input(1, get_h, k))) # needs testing
 
 
-
 def SS_SSEB(n, k =1000):
     """
-
     :return:
     """
     x_t = []
