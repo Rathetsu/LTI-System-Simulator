@@ -1,4 +1,7 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
+
 
 n = 2
 #A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [-0.125, -0.125, -0.375, -0.125]])
@@ -38,8 +41,10 @@ def SS_SSEB(n, k =1000, tk = 10):
     x_s = np.zeros(n).reshape(n, 1)
     x_j1 = []
     x_j2 = []
+    t = []
 
     for j in range(0, k+1, 2):
+
 
         #Getting B1
         x_temp = x_t
@@ -77,6 +82,10 @@ def SS_SSEB(n, k =1000, tk = 10):
         #x_j2 ==> x_t
         x_t = x_j2
 
+    for j in range(k+3):
+        #A list that contains all the time samples
+        t = np.append(t, j * step_h(tk, k))
+
 
 
     print(x_t)
@@ -89,7 +98,11 @@ def SS_SSEB(n, k =1000, tk = 10):
     print(B6)
     print(x_j1)
     print(x_j2)
-    print(x_s)
+    print(x_s[1])
+    print(t)
 
+    plt.plot(t, x_s[1])
+    plt.grid(True)
+    plt.show()
 
-SS_SSEB(n, 10, 1)
+SS_SSEB(n, 100, 10)
