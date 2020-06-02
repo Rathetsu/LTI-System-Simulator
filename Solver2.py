@@ -1,9 +1,10 @@
 import numpy as np
+import plot
 import matplotlib.pyplot as plt
 
 
 
-n = 4
+N = 4
 A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [-0.125, -0.125, -0.375, -0.125]])
 B = np.array([[0], [0], [0], [1]])
 C = np.array([0.125, 1.25, 0.5, 0.875])
@@ -16,16 +17,16 @@ def step_h(tk=10, k=1000):
     return h
 
 
-def func_B(x, u, A, B):
+def func_B(x, u_type: int, shift, tk, A, B):
     """
 
     :return:
     """
-    B_i = A.dot(x) + B.dot(u) #replace (1) with the input
+    B_i = A.dot(x) + B.dot(plot.generate_input(u_type, shift, tk)) #replace (1) with the input
     return B_i
 
 
-def SS_SSEB(n, k =1000, tk = 10):
+def SS_SSEB(n, k = 1000, tk = 10, u_type: int = 1):
     """
 
     :param n:
@@ -48,30 +49,33 @@ def SS_SSEB(n, k =1000, tk = 10):
 
     for j in range(0, k+1, 2):
 
-
         #Getting B1
         x_temp = x_t
-        B1 = func_B(x_temp, 1, A, B)
+        B1 = func_B(x_temp, u_type, 0, tk, A, B)
+
 
         #Getting B2
         x_temp = x_t + step_h(tk, k) * B1
-        B2 = func_B(x_temp, 1, A, B)
+        B2 = func_B(x_temp, u_type, 0.01, tk, A, B)
 
         #Getting B3
         x_temp = x_t + (step_h(tk, k)/2) * B1 + (step_h(tk, k)/2) * B2
-        B3 = func_B(x_temp, 1, A, B)
+        B3 = func_B(x_temp, u_type, 0.01, tk, A, B)
+
 
         #Getting B4
         x_temp = x_t + 2 * step_h(tk, k) * B3
-        B4 = func_B(x_temp, 1, A, B)
+        B4 = func_B(x_temp, u_type, 0.02, tk, A, B)
+
 
         #Getting B5
         x_temp = x_t + (step_h(tk, k) / 12) * (5 * B1 + 8 * B3 - B4)
-        B5 = func_B(x_temp, 1, A, B)
+        B5 = func_B(x_temp, u_type, 0.01, tk, A, B)
+
 
         #Getting B6
         x_temp = x_t + (step_h(tk, k) / 3) * (B1 + B4 + 4 * B5)
-        B6 = func_B(x_temp, 1, A, B)
+        B6 = func_B(x_temp, u_type, 0.02, tk, A, B)
 
 
         #Getting x(j+1) and x(j+2)
@@ -88,10 +92,14 @@ def SS_SSEB(n, k =1000, tk = 10):
     for j in range(k+3):
         #A list that contains all the time samples
         t = np.append(t, j * step_h(tk, k))
-    y_t = C.dot(x_s)
+    y_t = C.dot(x_s) + D.dot(plot.generate_input(u_type, 0, tk))
 
+    print(t.shape, y_t.shape)
+    plt.plot(t, y_t)
+    plt.grid(True)
+    plt.show()
 
-    print(x_t)
+"""    print(x_t)
     print(x_temp)
     print(B1)
     print(B2)
@@ -102,10 +110,8 @@ def SS_SSEB(n, k =1000, tk = 10):
     print(x_j1)
     print(x_j2)
     print(x_s)
-    print(y_t)
+    print(y_t)"""
 
-    plt.plot(t, y_t)
-    plt.grid(True)
-    plt.show()
 
-SS_SSEB(n, 10000, 10)
+
+SS_SSEB(N, 1000, 10, 1)
