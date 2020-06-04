@@ -103,7 +103,7 @@ def SS_SSEB(n, k =1000):
     print(x_s)
     #print(x_t)
     #print(x_temp)
-    #print(B1[10])
+    print(B1[3])
 
     plt.plot(t, x_s[0])
     plt.grid(True)

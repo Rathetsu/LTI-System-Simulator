@@ -68,7 +68,10 @@ def setC(a, b):
     """
     standard_form(a, b)
     C = []
-    if len(a) == len(b):
+    if len(b) == 1:
+        C.append(b[0])
+        C.append(0.0)
+    elif len(a) == len(b):
         for col in range(0, len(a)):
             C.append(b[len(a)-col-1] - a[len(a)-col-1]*b[0])
     else:
