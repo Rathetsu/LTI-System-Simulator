@@ -24,12 +24,15 @@ def generate_input(type, t: float, K: float):
     return u
 
 
-"""a = generate_input(1, 0.01 , 10)
-print(a)
+"""a = generate_input(1, 0.01, 10)
+#print(a)
 
 t = []
-t = np.arange(0, 1000)
+t = np.arange(0, 10, 0.01).reshape(1000)
 
-plt.plot(t, generate_input(2, 0.01, 10))
+print(a.shape, a.shape)
+
+
+plt.plot(t, a)
 plt.grid(True)
 plt.show()"""
