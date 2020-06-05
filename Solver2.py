@@ -4,15 +4,15 @@ import SSR
 import plot
 
 
-n = 4
-#m = 0
-#a = [1, 4, 25]
-#b = [50]
+n = 2
+m = 0
+a = [1, 4, 25]
+b = [50]
 
-#A = SSR.setA(a)
-#B = SSR.setB(n)
-#C = SSR.setC(a, b)
-#D = SSR.setD(n, m, a, b)
+A = SSR.setA(a)
+B = SSR.setB(n)
+C = SSR.setC(a, b)
+D = SSR.setD(n, m, a, b)
 
 #A = np.array([[-7]])
 #B = np.array([[1]])
@@ -24,13 +24,10 @@ n = 4
 #C = np.array([2, -4, 0])
 #D = np.array([2])
 
-
-
-
-A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [-3, -5, -4, -3]])
-B = np.array([[0], [0], [0], [1]])
-C = np.array([9, 0, 0, 0] )
-D = np.array([0])
+#A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [-3, -5, -4, -3]])
+#B = np.array([[0], [0], [0], [1]])
+#C = np.array([9, 0, 0, 0] )
+#D = np.array([0])
 
 
 
@@ -127,7 +124,7 @@ def SS_SSEB(n, u_type, k=1000, tk=10):
     if u_type == 1:
         y_t = C.dot(x_s) + D.dot(1)
     elif u_type == 2:
-        y_t = C.dot(xh_s) + D.dot(0)
+        y_t = C.dot(xh_s) + D.dot(plot.generate_input(u_type))
 
 
     print(x_t)
@@ -148,4 +145,4 @@ def SS_SSEB(n, u_type, k=1000, tk=10):
     plt.grid(True)
     plt.show()
 
-SS_SSEB(n, 1,1000, 200)
+SS_SSEB(n, 2, 1000, 10)
