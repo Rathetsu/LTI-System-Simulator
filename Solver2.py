@@ -1,18 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import SSR
-import plot
 
 
-n = 2
-m = 0
-a = [1, 4, 25]
-b = [50]
+#n = 2
+#m = 0
+#a = [1, 4, 25]
+#b = [50]
 
-A = SSR.setA(a)
-B = SSR.setB(n)
-C = SSR.setC(a, b)
-D = SSR.setD(n, m, a, b)
+#A = SSR.setA(a)
+#B = SSR.setB(n)
+#C = SSR.setC(a, b)
+#D = SSR.setD(n, m, a, b)
 
 #A = np.array([[-7]])
 #B = np.array([[1]])
@@ -30,6 +29,17 @@ D = SSR.setD(n, m, a, b)
 #D = np.array([0])
 
 
+def generate_input(u_type, k =1000):
+    """
+    returns a list u containing the y axis values of the function. 
+    """
+    u = []
+    if u_type == 1:
+        return 1
+    elif u_type == 2:
+        u = np.zeros(k + 3).reshape(1, k + 3)
+        u[0][0] = 1
+        return u
 
 def step_h(tk=10, k=1000):
     h = tk / k
@@ -45,7 +55,7 @@ def func_B(x, u,A, B):
     return B_i
 
 
-def SS_SSEB(n, u_type, k=1000, tk=10):
+def SS_SSEB(n, u_type,  A, B, C, D, tk, k=1000):
     """
 
     :param n:
@@ -124,10 +134,13 @@ def SS_SSEB(n, u_type, k=1000, tk=10):
     if u_type == 1:
         y_t = C.dot(x_s) + D.dot(1)
     elif u_type == 2:
-        y_t = C.dot(xh_s) + D.dot(plot.generate_input(u_type))
+        y_t = C.dot(xh_s) + D.dot(generate_input(u_type))
 
+    Foo = [y_t, x_s, xh_s, t]
+    return Foo
+    
 
-    print(x_t)
+    """print(x_t)
     print(x_temp)
     print(B1)
     print(B2)
@@ -141,8 +154,11 @@ def SS_SSEB(n, u_type, k=1000, tk=10):
     print(xh_s)
     print(y_t[0])
 
-    plt.plot(t, y_t)
+    plt.plot(t, x_s[0])
     plt.grid(True)
-    plt.show()
+    plt.show()"""
 
-SS_SSEB(n, 2, 1000, 10)
+"""Foo = SS_SSEB(n, 1, 10, 1000)
+plt.plot(Foo[2], Foo[0])
+plt.grid(True)
+plt.show()"""

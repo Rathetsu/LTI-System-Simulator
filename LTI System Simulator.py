@@ -7,8 +7,10 @@ It should allow the user to:
     4. Plotting the system states (X_1(t), X_2(t), X_3(t), ...., X_n(t)).
 """
 from tkinter import *
+from random import *
+import matplotlib.pyplot as plt
 import SSR
-#import Solver
+import Solver2
 
 HEIGHT = 680
 WIDTH = 880
@@ -45,18 +47,17 @@ bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 parameter_entry_widgets = []
 a = []
 b = [0]
- # The zero is a place holder that we clear later in the event of calling the parameters_window function.
- # Its purpose is to bypass the IndexError "list index out of range".     
+# The zero is a place holder that we clear later in the event of calling the parameters_window function.
+# Its purpose is to bypass the IndexError "list index out of range".
 
 def parameters_window():
     new_window = Toplevel(root)
     new_window.title("Enter System Parameters")
     new_window.configure(bg='#1C1C1C')
     new_window.resizable(False, False)
-
+    global n
     n = int(n_input.get())
     m = int(m_input.get())
-
     # r & c are placement variables 
     r = 0
     c = 0
@@ -84,53 +85,135 @@ def parameters_window():
 
     # State-Space Matrices
     def confirm_parameters():
+        global A
+        global B
+        global C
+        global D
+
         for i in range(n + 1):
             a.append(float(parameter_entry_widgets[i].get()))
         for i in range(m + 1):
             b.append(float(parameter_entry_widgets[i + n + 1].get()))
-        #an = SSR.standard_form(a, b)[0]
-        #bn = SSR.standard_form(a, b)[1]
+            
         SSR.standard_form(a, b)
         A = SSR.setA(a)
         B = SSR.setB(n)
         C = SSR.setC(a, b)
         D = SSR.setD(n, m, a, b)
 
-        print(a)
-        print(b)
-        print(A)
-        print(B)
-        print(C)
-        print(D)
-
         new_window.destroy()
+    
+    def randomize_parameters():
+        for i in range(n + 1):
+            parameter_entry_widgets[i].delete(0, END)
+            parameter_entry_widgets[i].insert(0, str(round(uniform(-100, 100), 1)))
 
+        for i in range(m + 1):
+            parameter_entry_widgets[i + n + 1].delete(0, END)
+            parameter_entry_widgets[i + n + 1].insert(0, str(round(uniform(-100, 100), 1)))
+
+    rand_button = Button(new_window, text = "Randomize", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 5, command = randomize_parameters)
     confirm_button = Button(new_window, text = "Confirm", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 5, command = confirm_parameters)
     r += 1
     c += 1
-    new_window.grid_rowconfigure(r, minsize = 30)
+    new_window.grid_rowconfigure(r, minsize = 10)
     new_window.grid_columnconfigure(c, minsize = 30)
     r += 1
     c += 1
+    rand_button.grid(row = r, column = c)
+    r += 1
     confirm_button.grid(row = r, column = c)
-
     new_window.mainloop()
 
-# Wdigets
+def set_u(selection):
+    global u_type
+    u_type = selection
+
+#def p_input():
+    #if u_type == "Unit Step":
+        
+    #else:
+        
+def p_response():
+    plt.close('all')
+    if u_type == "Unit Step":
+        p_response_if_step()
+    else:
+        p_response_if_impulse()
+
+def p_response_if_step():
+    max_t = int(maximum_time_entry.get())
+    Foo = Solver2.SS_SSEB(n, 1, A, B, C, D, max_t)
+    bar = Foo[0]
+    t = Foo[3]
+    plt.figure(num = "System Response")
+    plt.plot(t, bar)
+    plt.grid(True)
+    plt.show()
+
+def p_response_if_impulse():
+    max_t = int(maximum_time_entry.get())
+    Foo = Solver2.SS_SSEB(n, 2, A, B, C, D, max_t)
+    bar = Foo[0]
+    t = Foo[3]
+    plt.figure(num = "System Response")
+    plt.plot(t, bar)
+    plt.grid(True)
+    plt.show()
+
+def p_states():
+    plt.close('all')
+    if u_type == "Unit Step":
+        p_states_if_step()
+    else:
+        p_states_if_impulse()
+
+def p_states_if_step():
+    max_t = int(maximum_time_entry.get())
+    Foo = Solver2.SS_SSEB(n, 1, A, B, C, D, max_t)
+    bar = Foo[1]
+    t = Foo[3]
+
+    plt.figure(num = "System States")
+    for i in range(n):
+        state_name = "X"
+        state_name += str(i + 1)
+        plt.plot(t, bar[i], label = state_name)
+    plt.grid()
+    plt.legend()
+    plt.show()
+
+def p_states_if_impulse():
+    max_t = int(maximum_time_entry.get())
+    Foo = Solver2.SS_SSEB(n, 2, A, B, C, D, max_t)
+    bar = Foo[2]
+    t = Foo[3]
+
+    plt.figure(num = "System States")
+    for i in range(n):
+        state_name = "X"
+        state_name += str(i + 1)
+        plt.plot(t, bar[i], label = state_name)
+    plt.grid()
+    plt.legend()
+    plt.show()
+
+
+# main frame definitions and functionality
 n_label = Label(frame1, text = "n = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
 m_label = Label(frame1, text = "m = ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
 n_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 5)
 m_input = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 5)
 parameters_button = Button(frame1, text = "Input & Output Parameters", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = parameters_window)
 signal_type_label = Label(frame1, text = "Input Signal Type: ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
-choosen = StringVar()
-choosen.set("Unit Step")
-signal_type_menu = OptionMenu(frame1, choosen, "Unit Step", "Unit Impulse")
+selection = StringVar()
+#selection.set("Unit Step")
+signal_type_menu = OptionMenu(frame1, selection, "Unit Step", "Unit Impulse", command = set_u)
 maximum_time_label = Label(frame1, text = "Maximum Time: ", font = ("Georgia", 22), fg = 'white', bg='#1C1C1C')
 maximum_time_entry = Entry(frame1, width = 5, font = ("Times New Roman", 20), fg = 'black', bd = 5)
-plot_output = Button(frame1, text = "Plot System Response", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6)
-plot_states = Button(frame1, text = "Plot States", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6)
-
+maximum_time_entry.insert(0, "10")
+plot_output = Button(frame1, text = "Plot System Response", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = p_response)
+plot_states = Button(frame1, text = "Plot States", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 6, command = p_states)
 
 # Widget placement
 frame1.grid_rowconfigure(0, minsize = 240)
@@ -153,8 +236,5 @@ maximum_time_label.place(x = 30, y = 480)
 maximum_time_entry.place(x = 310,y = 480)
 plot_output.place(x = 480, y = 520)
 plot_states.place(x = 530, y = 580)
-
-
-#signature = Label(root, text = "Created by")
 
 root.mainloop()
