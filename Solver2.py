@@ -3,32 +3,6 @@ import matplotlib.pyplot as plt
 import SSR
 
 
-#n = 2
-#m = 0
-#a = [1, 4, 25]
-#b = [50]
-
-#A = SSR.setA(a)
-#B = SSR.setB(n)
-#C = SSR.setC(a, b)
-#D = SSR.setD(n, m, a, b)
-
-#A = np.array([[-7]])
-#B = np.array([[1]])
-#C = np.array([-20])
-#D = np.array([4])
-
-#A = np.array([[0, 1, 0], [0, 0, 1], [-2, -4, -1]])
-#B = np.array([[0], [0], [1]])
-#C = np.array([2, -4, 0])
-#D = np.array([2])
-
-#A = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [-3, -5, -4, -3]])
-#B = np.array([[0], [0], [0], [1]])
-#C = np.array([9, 0, 0, 0] )
-#D = np.array([0])
-
-
 def generate_input(u_type, k =1000):
     """
     returns a list u containing the y axis values of the function. 
@@ -138,27 +112,3 @@ def SS_SSEB(n, u_type,  A, B, C, D, tk, k=1000):
 
     Foo = [y_t, x_s, xh_s, t]
     return Foo
-    
-
-    """print(x_t)
-    print(x_temp)
-    print(B1)
-    print(B2)
-    print(B3)
-    print(B4)
-    print(B5)
-    print(B6)
-    print(x_j1)
-    print(x_j2)
-    print(x_s)
-    print(xh_s)
-    print(y_t[0])
-
-    plt.plot(t, x_s[0])
-    plt.grid(True)
-    plt.show()"""
-
-"""Foo = SS_SSEB(n, 1, 10, 1000)
-plt.plot(Foo[2], Foo[0])
-plt.grid(True)
-plt.show()"""

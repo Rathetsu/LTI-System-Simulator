@@ -100,17 +100,21 @@ def parameters_window():
         B = SSR.setB(n)
         C = SSR.setC(a, b)
         D = SSR.setD(n, m, a, b)
+        print(A)
+        print(B)
+        print(C)
+        print(D)
 
         new_window.destroy()
     
     def randomize_parameters():
         for i in range(n + 1):
             parameter_entry_widgets[i].delete(0, END)
-            parameter_entry_widgets[i].insert(0, str(round(uniform(-100, 100), 1)))
+            parameter_entry_widgets[i].insert(0, str(round(uniform(0, 20), 0)))
 
         for i in range(m + 1):
             parameter_entry_widgets[i + n + 1].delete(0, END)
-            parameter_entry_widgets[i + n + 1].insert(0, str(round(uniform(-100, 100), 1)))
+            parameter_entry_widgets[i + n + 1].insert(0, str(round(uniform(0, 20), 0)))
 
     rand_button = Button(new_window, text = "Randomize", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 5, command = randomize_parameters)
     confirm_button = Button(new_window, text = "Confirm", bg = 'white', fg = 'black', font =("Georgia", 15, 'bold'), bd = 5, command = confirm_parameters)

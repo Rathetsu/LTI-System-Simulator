@@ -68,14 +68,15 @@ def setC(a, b):
     """
     standard_form(a, b)
     C = []
-    if len(b) == 1:
+    if len(b) == 1 and len(a) > 2:
         C.append(b[0])
-        C.append(0.0)
+        for col in range(len(a)-2):
+            C.append(0.0)
     elif len(a) == len(b):
-        for col in range(0, len(a)):
+        for col in range(0, len(a)-1):
             C.append(b[len(a)-col-1] - a[len(a)-col-1]*b[0])
     else:
-        for col in range(0, len(b)):
+        for col in range(0, len(a)-1):
             C.append(b[len(b)-col-1])
     C = np.array(C)
     return C
@@ -96,16 +97,6 @@ def setD(n, m, a, b):
         D = [0]
     D = np.array(D)
     return D
-
-
-#a = [1, 2, 3]
-#b = [5]
-#n = 3
-#m = 3
-#print(setA(a))
-#print(setB(n))
-#print(setC(a, b))
-#print(setD(n, m, b))
 
 
 
